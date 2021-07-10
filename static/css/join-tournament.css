@@ -1,0 +1,177 @@
+.titre-page {
+    font-size: 27px;
+}
+
+.select {
+    position: relative;
+}
+
+#option-list {
+    position: absolute;
+    display: none;
+}
+
+.dropdown-select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #5215FC;
+    width: fit-content;
+    padding: 7px 0px 7px 0px;
+    box-shadow: 0px 3px 6px #482CF280;
+    width: 80px;
+}
+
+.dropdown-select.selected {
+    border-radius: 5px 0px 0px 5px;
+}
+
+.dropdown-select.selected:hover {
+    cursor: pointer;
+}
+
+.input-container {
+    display: flex;
+    justify-content: center;
+    height: 48px;
+    position: relative;
+    margin-top: 20px;
+}
+
+#input-joueur {
+    border-radius: 0 5px 5px 0;
+    padding: 0 0 0 10px;
+}
+
+.input-times {
+    position: absolute;
+    border: none;
+    color: white;
+    right: 8px;
+    top: 13px;
+}
+
+.input-times:hover {
+    cursor: pointer;
+}
+
+#select {
+    width: 15%;
+    border: none;
+    background-color: #5215FC;
+    color: white;
+    border-radius: 5px 0 0 5px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#select:focus-visible {
+    outline: none;
+}
+
+#list-player-searched {
+    display: none;
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    width: 50%;
+    border-radius: 0 5px 5px 5px;
+    padding: 10px;
+    max-height: 250px;
+    overflow: auto;
+    z-index: 100;
+}
+
+.player-listed {
+    display: flex;
+    padding: 5px;
+}
+
+.player-listed:hover {
+    cursor: pointer;
+    background-color: rgba(161, 161, 161, 0.521);
+    border-radius: 5px;
+}
+
+.player-listed img {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    margin-right: 7px;
+}
+
+#titre-liste {
+    margin-top: 30px;
+}
+
+#list-player-registered {
+    margin-top: 20px;
+    overflow: auto;
+    max-height: calc(100% - 176px);
+}
+
+.player-registered {
+    display: flex;
+    background-color: rgb(49 49 49 / 68%);
+    align-items: center;
+    border-radius: 5px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    padding-right: 10px;
+}
+
+.player-registered.user-client {
+    background-color: rgba(255, 0, 0, 0.603);
+}
+
+.img-rank {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+}
+
+.tournament-footer {
+    bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ready-element {
+    display: none;
+    font-size: 14px;
+}
+
+.progress-bar-container {
+    font-size: 16px;
+    width: calc(100% - 323px);
+    position: relative;
+    display: none;
+}
+
+.progress-bar-container .progress-shape {
+    height: 8px;
+    border-radius: 8px;
+}
+
+.progress-bar-container .progress-bar-background {
+    width: 100%;
+    background-color: #DDDDDD;
+}
+
+.progress-bar-container .progress-bar {
+    background-color: #5215FC;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
+#btn-cancel {
+    display: none;
+}
+
+#btn-next {
+    margin-right: 10px;
+    display: none;
+}

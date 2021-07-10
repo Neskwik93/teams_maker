@@ -1,0 +1,4 @@
+#list-player-registered-last-step {
+    max-height: calc(100% - 64px);
+    overflow: auto;
+}

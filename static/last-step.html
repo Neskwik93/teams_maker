@@ -1,0 +1,25 @@
+<div class="page-content">
+    <div class="page-header mb-4">
+        <div style="display: flex; align-items: center;">
+            <button title="retour" onclick="back(2)" class="icon-btn" style="margin-right: 10px;">
+                <i class="fas fa-chevron-left icon"></i>
+            </button>
+            <i class="fas fa-trophy" style="margin: 0 10px 0 20px"></i>
+            <span class="titre-page">Création des équipes</span>
+        </div>
+        <div id="profile"></div>
+    </div>
+    <div style="height: calc(100% - 110px);">
+        <div id="titre-liste-last-step" class="mb-3">
+            Liste des participants inscrits :
+        </div>
+        <div class="row" id="list-player-registered-last-step"></div>
+    </div>
+    <div class="tournament-footer">
+        <img class="logo-rl" src="assets/Logos/Logo_rocket-league.svg" alt="logo-rl">
+        <div>
+            <button onclick="generateTeams(2)" class="btn admin-elements">GENERER 2V2</button>
+            <button onclick="generateTeams(3)" class="btn admin-elements">GENERER 3V3</button>
+        </div>
+    </div>
+</div>
