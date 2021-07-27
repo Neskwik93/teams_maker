@@ -19,6 +19,12 @@ header {
     position: relative;
 }
 
+.logo-lychar {
+    border-radius: 50%;
+    width: 80px;
+    margin-left: 10px;
+}
+
 .background {
     position: absolute;
     width: 100%;
@@ -37,6 +43,7 @@ header {
 #header-content {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 25px 0 25px 0;
     width: 90%;
     margin: auto;
@@ -82,8 +89,11 @@ input:focus-visible {
 
 .btn {
     background: #5215FC 0% 0% no-repeat padding-box;
+    background: #048b9a 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #482CF280;
+    box-shadow: 0px 3px 6px #00768365;
     border: 1.5px solid #5215FC;
+    border: 1.5px solid #048b9a;
     border-radius: 4px;
     text-decoration: none;
     padding: 10px 15px;

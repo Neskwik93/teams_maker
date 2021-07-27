@@ -12,7 +12,7 @@ let initLastStep = () => {
             <div class="col-md-6">
                 <div id="`+ u?.metadata?.playerId + `" class="player-registered` + (u?.metadata?.playerId === user?.metadata?.playerId ? ' user-client' : '') + `">
                     <div class="d-flex align-items-center">    
-                        <img class="img-rank" src="`+ (rank?.stats?.tier?.metadata?.iconUrl || '/assets/Logos/user_unknown.jpg') + `" alt="">
+                        <img class="img-rank" src="`+ (rank?.stats?.tier?.metadata?.iconUrl || '/assets/logos/user_unknown.jpg') + `" alt="">
                         <span>`+ u?.platformInfo?.platformUserHandle + `</span>
                     </div>
                     <div class="ready-element">
@@ -71,13 +71,13 @@ socket.on('displayTeams', (ttTeam) => {
                 <div class="mb-1">Groupe ` + (ttTeam.indexOf(team) + 1) + (yourTeam ? '(votre groupe)' : '') + `</div>
                 <div id="` + team?.u1?.metadata?.playerId + `" class="player-registered` + (team?.u1?.metadata?.playerId === user?.metadata?.playerId ? ' user-client' : '') + `">
                     <div class="d-flex align-items-center">    
-                        <img class="img-rank" src="`+ (rankU1?.stats?.tier?.metadata?.iconUrl || '/assets/Logos/user_unknown.jpg') + `" alt="">
+                        <img class="img-rank" src="`+ (rankU1?.stats?.tier?.metadata?.iconUrl || '/assets/logos/user_unknown.jpg') + `" alt="">
                         <span>`+ team?.u1?.platformInfo?.platformUserHandle + `</span>
                     </div>
                 </div>
                 <div id="` + team?.u2?.metadata?.playerId + `" class="player-registered` + (team?.u2?.metadata?.playerId === user?.metadata?.playerId ? ' user-client' : '') + `">
                     <div class="d-flex align-items-center">    
-                        <img class="img-rank" src="`+ (rankU2?.stats?.tier?.metadata?.iconUrl || '/assets/Logos/user_unknown.jpg') + `" alt="">
+                        <img class="img-rank" src="`+ (rankU2?.stats?.tier?.metadata?.iconUrl || '/assets/logos/user_unknown.jpg') + `" alt="">
                         <span>`+ team?.u2?.platformInfo?.platformUserHandle + `</span>
                     </div>
                 </div>

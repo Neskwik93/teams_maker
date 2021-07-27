@@ -11,23 +11,18 @@
     display: none;
 }
 
-.dropdown-select {
+.logo-epic {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #5215FC;
+    background-color: #048b9a;
     width: fit-content;
     padding: 7px 0px 7px 0px;
     box-shadow: 0px 3px 6px #482CF280;
-    width: 80px;
-}
-
-.dropdown-select.selected {
+    box-shadow: 0px 3px 6px #00768365;
+    width: 6%;
     border-radius: 5px 0px 0px 5px;
-}
-
-.dropdown-select.selected:hover {
-    cursor: pointer;
 }
 
 .input-container {
@@ -59,6 +54,7 @@
     width: 15%;
     border: none;
     background-color: #5215FC;
+    background-color: #048b9a;
     color: white;
     border-radius: 5px 0 0 5px;
     font-weight: bold;
@@ -162,6 +158,7 @@
 
 .progress-bar-container .progress-bar {
     background-color: #5215FC;
+    background-color: #048b9a;
     position: absolute;
     bottom: 0px;
     width: 100%;

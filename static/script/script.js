@@ -10,9 +10,9 @@ let ttPage = [
 let userAdmin = false;
 let ttUserRegistered = [];
 
-let back = (pageId) => {
+/* let back = (pageId) => {
     includeHTML(pageId);
-}
+} */
 
 includeHTML = (idPage) => {
     let page = ttPage.find(p => p.id === idPage);
@@ -42,7 +42,7 @@ let setProfile = () => {
         let rank = user.segments.find(s => s.attributes.playlistId === 11); //correspond à rank 2v2
         let str = `
         <div class="d-flex justify-content-center">
-            <img class="img-profile" src="`+ (user?.platformInfo?.avatarUrl || '/assets/Logos/user_unknown.jpg') + `" alt="">
+            <img class="img-profile" src="`+ (user?.platformInfo?.avatarUrl || '/assets/logos/user_unknown.jpg') + `" alt="">
             <div>
                 <div>
                 `+ user?.platformInfo?.platformUserHandle + `

@@ -1,9 +1,9 @@
 <div class="page-content">
     <div class="page-header mb-4">
         <div style="display: flex; align-items: center;">
-            <button title="retour" onclick="back(1)" class="icon-btn" style="margin-right: 10px;">
+            <!-- <button title="retour" onclick="back(1)" class="icon-btn" style="margin-right: 10px;">
                 <i class="fas fa-chevron-left icon"></i>
-            </button>
+            </button> -->
             <i class="fas fa-trophy" style="margin: 0 10px 0 20px"></i>
             <span class="titre-page">Rejoindre le tournoi</span>
         </div>
@@ -13,31 +13,11 @@
         <label for="input-joueur" style="margin-bottom: 10px;">
             Nom de joueur·euse <span style="color: #DE3043;">*</span>
         </label>
-        <!-- <div class="select">
-            <div class="dropdown-select selected" onclick="dropdown()">
-                <img style="width: 30px; height: 30px;" src="assets/Logos/epic-games-2.svg" alt="">
-                <i id="chevron-select" class="fas fa-chevron-down" style="margin-left: 10px;"></i>
-            </div>
-            <div id="option-list">
-                <div class="dropdown-select">
-                    <img style="width: 30px; height: 30px;" src="assets/Logos/playstation-6.svg" alt="">
-                </div>
-                <div class="dropdown-select">
-                    <img style="width: 30px; height: 30px;" src="assets/Logos/steam-1.svg" alt="">
-                </div>
-                <div class="dropdown-select">
-                    <img style="width: 30px; height: 30px;" src="assets/Logos/xbox-1.svg" alt="">
-                </div>
-            </div>
-        </div> TODO: à finir pour que ce soit plus prorpe -->
         <div class="input-container">
-            <select id="select" onchange="selectPlatform(event)">
-                <option value="epic">Epic Games</option>
-                <option selected value="steam">Steam</option>
-                <option value="xbl">Xbox Live</option>
-                <option value="psn">PSN</option>
-            </select>
-            <div style="width: 85%;">
+            <div class="logo-epic" onclick="dropdown()">
+                <img style="width: 30px; height: 30px;" src="assets/logos/epic-games-2.svg" alt="">
+            </div>
+            <div style="width: 94%;">
                 <input autofocus oninput="searchName(event)" id="input-joueur" type="text">
                 <i title="quitter le tournoi" onclick="resetPlayer()" class="fa fa-times input-times"></i>
                 <div id="list-player-searched">
@@ -50,7 +30,7 @@
         <div class="row" id="list-player-registered"></div>
     </div>
     <div class="tournament-footer">
-        <img class="logo-rl" src="assets/Logos/Logo_rocket-league.svg" alt="logo-rl">
+        <img class="logo-rl" src="assets/logos/Logo_rocket-league.svg" alt="logo-rl">
         <div class="progress-bar-container">
             <div>Vérification des préparations en cours... <span class="timer"></span></div>
             <div class="progress-bar-background progress-shape"></div>

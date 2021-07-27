@@ -114,15 +114,24 @@ io.on("connection", (client) => {
     if (client.id === clientAdminId) {
       tournamentOpen = true;
       ttUser.forEach(u => u.ready = false);
-      io.emit('updateUser', ttUser)
+      io.emit('updateUser', ttUser);
     } else io.to(client.id).emit('error', 'Vous n\'êtes pas administrateur du tournoi');
   });
 
   client.on('disconnect', () => { // se déclenche automatiquement quand on ferme l'onglet
     let userToRemove = ttUser.findIndex(u => u.clientId === client.id);
+    if (client.id === clientAdminId) {
+       ttUser = [];
+       clientAdminId = null;
+       tournamentOpen = true;
+    }
     if (userToRemove !== -1) {
       ttUser.splice(userToRemove, 1);
-      io.emit('updateUser', ttUser);
+      if(!tournamentOpen) {
+        io.emit('updateUserReady', ttUser);
+      } else {
+        io.emit('updateUser', ttUser);
+      }
     }
     if (ttUser.length === 0) {
       tournamentOpen = true;

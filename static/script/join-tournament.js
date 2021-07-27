@@ -1,6 +1,6 @@
 
 let ttUserSearch = [];
-let user, platform = 'steam';
+let user, platform = 'epic';
 let optionList, chevron, inputJoueur, listPlayerSearched, listPlayerRegistered,
     titreListe, modalValidation, progressBar, timer, interval, btnPreparatif, btnCancel, btnNext;
 
@@ -21,11 +21,6 @@ let dropdown = () => {
     }
 }
 
-let selectPlatform = (event) => {
-    platform = event.target.value;
-    searchName();
-}
-
 let searchName = () => {
     inputJoueur = document.getElementById('input-joueur');
     listPlayerSearched = document.getElementById('list-player-searched');
@@ -39,7 +34,7 @@ let searchName = () => {
                 ttUserSearch.forEach(u => {
                     str += `
                     <div class="player-listed" onclick="selectPlayer('`+ u.platformUserIdentifier + `')">
-                        <img src="`+ (u?.avatarUrl || '/assets/Logos/user_unknown.jpg') + `" alt="">
+                        <img src="`+ (u?.avatarUrl || '/assets/logos/user_unknown.jpg') + `" alt="">
                         <div>
                             `+ u.platformUserHandle + `
                         </div>
@@ -127,6 +122,7 @@ let next = () => {
 }
 
 socket.on('updateUser', (ttUserEmitted) => {
+    ttUserRegistered = ttUserEmitted || [];
     if (btnPreparatif && btnCancel && userAdmin) {
         btnPreparatif.style.display = 'inline-block';
         btnCancel.style.display = 'none';
@@ -143,7 +139,10 @@ socket.on('updateUser', (ttUserEmitted) => {
         modalValidation.style.display = 'none';
     }
     if (interval) clearInterval(interval);
-    ttUserRegistered = ttUserEmitted || [];
+    displayUser();
+});
+
+displayUser = () => {
     titreListe = document.getElementById('titre-liste');
     if (titreListe) {
         titreListe.innerHTML = 'Liste des participants inscrits (' + ttUserRegistered.length + ') :';
@@ -155,7 +154,7 @@ socket.on('updateUser', (ttUserEmitted) => {
             <div class="col-md-6">
                 <div id="`+ u?.metadata?.playerId + `" class="player-registered` + (u?.metadata?.playerId === user?.metadata?.playerId ? ' user-client' : '') + `">
                     <div class="d-flex align-items-center">    
-                        <img class="img-rank" src="`+ (rank?.stats?.tier?.metadata?.iconUrl || '/assets/Logos/user_unknown.jpg') + `" alt="">
+                        <img class="img-rank" src="`+ (rank?.stats?.tier?.metadata?.iconUrl || '/assets/logos/user_unknown.jpg') + `" alt="">
                         <span>`+ u?.platformInfo?.platformUserHandle + `</span>
                     </div>
                     <div class="ready-element">
@@ -169,7 +168,7 @@ socket.on('updateUser', (ttUserEmitted) => {
         });
         listPlayerRegistered.innerHTML = str;
     }
-});
+}
 
 socket.on('ruReady', () => {
     modalValidation = document.getElementById('modal-validation');
@@ -217,7 +216,8 @@ socket.on('ruReady', () => {
 });
 
 socket.on('updateUserReady', (ttUser) => {
-    ttUserRegistered = ttUser;
+    ttUserRegistered = ttUser || [];
+    displayUser();
     ttUserRegistered.filter(u => u.ready).forEach(u => {
         let playerDisplayed = document.getElementById(u.metadata.playerId);
         if (playerDisplayed) {
@@ -225,6 +225,7 @@ socket.on('updateUserReady', (ttUser) => {
             for (let i = 0; i < playerDisplayed.children.length; i++) {
                 if (playerDisplayed.children[i].classList.contains('ready-element')) {
                     let elem = playerDisplayed.children[i];
+                    elem.style.display = 'block'
                     let children = elem.children;
                     for (let j = 0; j < children.length; j++) {
                         if (children[j].classList.contains('check-element')) {
