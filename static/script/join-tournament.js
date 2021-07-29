@@ -34,7 +34,6 @@ let searchName = () => {
                 ttUserSearch.forEach(u => {
                     str += `
                     <div class="player-listed" onclick="selectPlayer('`+ u.platformUserIdentifier + `')">
-                        <img src="`+ (u?.avatarUrl || '/assets/logos/user_unknown.jpg') + `" alt="">
                         <div>
                             `+ u.platformUserHandle + `
                         </div>

@@ -1,5 +1,36 @@
+@media only screen and (max-width: 900px) {
+    .btn-content {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .btn-content .btn:first-child {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    .btn-content .btn {
+        width: 50%;
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    .btn-content {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+    }
+    .btn-content .btn:first-child {
+        margin-right: 10%;
+    }
+    .btn-content .btn {
+        width: 30%;
+    }
+}
+
 .btn-content {
-    margin-bottom: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .logo-rl {

@@ -42,12 +42,11 @@ let setProfile = () => {
         let rank = user.segments.find(s => s.attributes.playlistId === 11); //correspond à rank 2v2
         let str = `
         <div class="d-flex justify-content-center">
-            <img class="img-profile" src="`+ (user?.platformInfo?.avatarUrl || '/assets/logos/user_unknown.jpg') + `" alt="">
             <div>
                 <div>
                 `+ user?.platformInfo?.platformUserHandle + `
                 </div>
-                <div style="font-size: 16px;">
+                <div class="subtitle-name">
                 ` + (userAdmin ? 'Administrateur' : 'Participant') + `
                 </div>
             </div>

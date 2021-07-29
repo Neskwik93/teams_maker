@@ -1,5 +1,51 @@
-.titre-page {
-    font-size: 27px;
+@media only screen and (max-width: 450px) {
+   .tournament-footer img {
+       display: none;
+   }
+}
+
+@media only screen and (max-width: 900px) {
+    .titre-page {
+        font-size: 15px;
+    }
+    .logo-epic-container {
+        width: 20%;
+    }
+    .logo-epic {
+        width: 25px;
+        height: 25px;
+    }
+    .input-container {
+        height: 35px;
+    }
+    .subtitle-name {
+        font-size: 12px;
+    }
+    .input-times {
+        top: 10px;
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    .titre-page {
+        font-size: 27px;
+    }
+    .logo-epic-container {
+        width: 6%;
+    }
+    .logo-epic {
+        width: 30px;
+        height: 30px;
+    }
+    .input-container {
+        height: 48px;
+    }
+    .subtitle-name {
+        font-size: 16px;
+    }
+    .input-times {
+        top: 13px;
+    }
 }
 
 .select {
@@ -11,24 +57,21 @@
     display: none;
 }
 
-.logo-epic {
+.logo-epic-container {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #5215FC;
     background-color: #048b9a;
-    width: fit-content;
     padding: 7px 0px 7px 0px;
     box-shadow: 0px 3px 6px #482CF280;
     box-shadow: 0px 3px 6px #00768365;
-    width: 6%;
     border-radius: 5px 0px 0px 5px;
 }
 
 .input-container {
     display: flex;
     justify-content: center;
-    height: 48px;
     position: relative;
     margin-top: 20px;
 }
@@ -43,7 +86,6 @@
     border: none;
     color: white;
     right: 8px;
-    top: 13px;
 }
 
 .input-times:hover {
@@ -70,8 +112,8 @@
     position: absolute;
     background-color: rgb(255, 255, 255);
     color: black;
-    width: 50%;
-    border-radius: 0 5px 5px 5px;
+    width: 70%;
+    border-radius: 0 0 5px 5px;
     padding: 10px;
     max-height: 250px;
     overflow: auto;
