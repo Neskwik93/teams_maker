@@ -168,8 +168,6 @@ displayUser = () => {
                     </button>` : '') + `
                 </div>
             </div>`;
-            console.log(u)
-            console.log(user)
         });
         listPlayerRegistered.innerHTML = str;
         console.log(userAdmin)
@@ -178,8 +176,6 @@ displayUser = () => {
 }
 
 let removeUser = (userId) => {
-    console.log(userId)
-    console.log(ttUserRegistered)
     socket.emit('removeUser', userId)
 }
 

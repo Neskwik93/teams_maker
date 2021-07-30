@@ -20,6 +20,7 @@ let clientAdminId;
 let tournamentOpen = true;
 
 io.on("connection", (client) => {
+  console.log(client.handshake.headers["x-real-ip"])
 
   client.on('setAdmin', (str, callback) => {
     if (str === password) { // si quelqu'un d'autre essaye et se trompe ça n'enlève pas l'admin existant
@@ -29,7 +30,7 @@ io.on("connection", (client) => {
   });
 
   client.on('checkTournamentOpen', (callback) => {
-    if (tournamentOpen || ttUser.find(u => u.clientId === client.id)) callback(true);
+    if (tournamentOpen || ttUser.find(u => u.ip === client.handshake.headers["x-real-ip"])) callback(true);
     else io.to(client.id).emit('error', 'Un tournoi est déjà en cours');
   });
 
@@ -52,6 +53,7 @@ io.on("connection", (client) => {
         io.to(client.id).emit('error', 'Joueur introuvable: ' + res.errors[0].message);
       } else {
         res.data.clientId = client.id;
+        res.data.ip = client.handshake.headers["x-real-ip"]
         callback(res);
       }
     } else io.to(client.id).emit('error', 'Un tournoi est déjà en cours');
@@ -61,22 +63,23 @@ io.on("connection", (client) => {
     io.emit('updateUser', ttUser || []);
   });
 
-  client.on('addPlayer', (player, callback) => {
+  client.on('addPlayer', (user, callback) => {
     if (tournamentOpen) {
-      let userExists = ttUser.findIndex(u => u.clientId === client.id);
+      let userExists = ttUser.findIndex(u => u.ip === client.handshake.headers["x-real-ip"]);
       if (userExists !== -1) ttUser.splice(userExists, 1);
-      player.clientId = client.id;
-      ttUser.push(player);
+      user.clientId = client.id;
+      user.ip = client.handshake.headers["x-real-ip"];
+      ttUser.push(user);
       io.emit('updateUser', ttUser);
-      callback(player)
+      callback(user)
     } else io.to(client.id).emit('error', 'Un tournoi est déjà en cours');
   });
 
   client.on('removePlayer', (user) => { // removes by himself
-    let id = ttUser.findIndex(u => u.clientId === user.clientId);
+    let id = ttUser.findIndex(u => u.ip === user.ip);
     if (id !== -1) {
       ttUser.splice(id, 1);
-      if(!tournamentOpen) io.emit('updateUserReady', ttUser);
+      if (!tournamentOpen) io.emit('updateUserReady', ttUser);
       else io.emit('updateUser', ttUser);
     }
   });
@@ -104,7 +107,7 @@ io.on("connection", (client) => {
   });
 
   client.on('setReady', () => {
-    let user = ttUser.find(u => u.clientId === client.id);
+    let user = ttUser.find(u => u.ip === client.handshake.headers["x-real-ip"]);
     if (user) {
       user.ready = true;
       io.emit('updateUserReady', ttUser);
@@ -132,22 +135,21 @@ io.on("connection", (client) => {
   });
 
   client.on('disconnect', () => { // se déclenche automatiquement quand on ferme l'onglet
-    let userToRemove = ttUser.findIndex(u => u.clientId === client.id);
-    if (client.id === clientAdminId) {
-      ttUser = [];
-      clientAdminId = null;
-      tournamentOpen = true;
-    }
-    if (userToRemove !== -1) {
-      ttUser.splice(userToRemove, 1);
-      if (!tournamentOpen) io.emit('updateUserReady', ttUser);
-      else io.emit('updateUser', ttUser);
-    }
-    if (ttUser.length === 0) {
-      tournamentOpen = true;
-    }
+    /*  let userToRemove = ttUser.findIndex(u => u.clientId === client.id);
+     if (client.id === clientAdminId) {
+       ttUser = [];
+       clientAdminId = null;
+       tournamentOpen = true;
+     }
+     if (userToRemove !== -1) {
+       ttUser.splice(userToRemove, 1);
+       if (!tournamentOpen) io.emit('updateUserReady', ttUser);
+       else io.emit('updateUser', ttUser);
+     }
+     if (ttUser.length === 0) {
+       tournamentOpen = true;
+     }*/
   });
-
 });
 
 httpServer.listen(process.env.PORT, process.env.HOST, () => {
