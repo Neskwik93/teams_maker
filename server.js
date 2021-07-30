@@ -51,6 +51,7 @@ io.on("connection", (client) => {
       if (res.errors && res.errors.length > 0) {
         io.to(client.id).emit('error', 'Joueur introuvable: ' + res.errors[0].message);
       } else {
+        res.data.clientId = client.id;
         callback(res);
       }
     } else io.to(client.id).emit('error', 'Un tournoi est déjà en cours');
@@ -71,13 +72,25 @@ io.on("connection", (client) => {
     } else io.to(client.id).emit('error', 'Un tournoi est déjà en cours');
   });
 
-  client.on('removePlayer', (player) => {
-    let id = ttUser.findIndex(u => u.platformInfo.platformUserIdentifier === player.platformInfo.platformUserIdentifier);
+  client.on('removePlayer', (user) => { // removes by himself
+    let id = ttUser.findIndex(u => u.clientId === user.clientId);
     if (id !== -1) {
       ttUser.splice(id, 1);
-      io.emit('updateUser', ttUser);
+      if(!tournamentOpen) io.emit('updateUserReady', ttUser);
+      else io.emit('updateUser', ttUser);
     }
   });
+
+  client.on('removeUser', (userId) => { // removed by admin
+    if (client.id === clientAdminId) {
+      let id = ttUser.findIndex(u => u.clientId === userId);
+      if (id !== -1) {
+        ttUser.splice(id, 1);
+        if (!tournamentOpen) io.emit('updateUserReady', ttUser);
+        else io.emit('updateUser', ttUser);
+      }
+    } else io.to(client.id).emit('error', 'Vous n\'êtes pas administrateur du tournoi');
+  })
 
   client.on('askReady', () => {
     if (tournamentOpen) {
@@ -94,7 +107,7 @@ io.on("connection", (client) => {
     let user = ttUser.find(u => u.clientId === client.id);
     if (user) {
       user.ready = true;
-      io.emit('updateUserReady', ttUser)
+      io.emit('updateUserReady', ttUser);
     }
   });
 
@@ -121,17 +134,14 @@ io.on("connection", (client) => {
   client.on('disconnect', () => { // se déclenche automatiquement quand on ferme l'onglet
     let userToRemove = ttUser.findIndex(u => u.clientId === client.id);
     if (client.id === clientAdminId) {
-       ttUser = [];
-       clientAdminId = null;
-       tournamentOpen = true;
+      ttUser = [];
+      clientAdminId = null;
+      tournamentOpen = true;
     }
     if (userToRemove !== -1) {
       ttUser.splice(userToRemove, 1);
-      if(!tournamentOpen) {
-        io.emit('updateUserReady', ttUser);
-      } else {
-        io.emit('updateUser', ttUser);
-      }
+      if (!tournamentOpen) io.emit('updateUserReady', ttUser);
+      else io.emit('updateUser', ttUser);
     }
     if (ttUser.length === 0) {
       tournamentOpen = true;

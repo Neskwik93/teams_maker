@@ -53,6 +53,7 @@ let selectPlayer = (userId) => {
     listPlayerSearched.style.display = 'none';
     socket.emit('getPlayer', { platform: platform, userId: userId }, (response) => {
         user = response.data;
+        console.log(user)
         if (user) {
             let userExist = ttUserRegistered?.find(u => u.metadata.playerId === user.metadata.playerId);
             if (userExist) {
@@ -106,7 +107,7 @@ let displayNext = () => {
     if (userAdmin) {
         btnNext = document.getElementById('btn-next');
         btnNext.style.display = 'inline-block';
-        for (let i = 0; i < progressBar.length; i++) {
+        for (let i = 0; i < progressBar?.length || 0; i++) {
             progressBar[i].style.display = 'none';
         }
         modalValidation.style.display = 'none';
@@ -161,12 +162,25 @@ displayUser = () => {
                         <i class="question-element fa fa-question-circle" aria-hidden="true"></i>
                         <span class="question-element">En attente</span>
                         <span class="check-element">Prêt·e</span>
-                    </div>
+                    </div>`+ ((userAdmin && u?.clientId !== user?.clientId) ? `
+                    <button style="background-color: transparent;" class="admin-elements icon-btn" onclick="removeUser('`+ u?.clientId + `')">
+                        <i class="fa fa-times"></i>
+                    </button>` : '') + `
                 </div>
             </div>`;
+            console.log(u)
+            console.log(user)
         });
         listPlayerRegistered.innerHTML = str;
+        console.log(userAdmin)
+        checkAdminElement();
     }
+}
+
+let removeUser = (userId) => {
+    console.log(userId)
+    console.log(ttUserRegistered)
+    socket.emit('removeUser', userId)
 }
 
 socket.on('ruReady', () => {
@@ -237,7 +251,7 @@ socket.on('updateUserReady', (ttUser) => {
             }
         }
     });
-    if (!ttUserRegistered.find(u => !u.ready)) {
+    if (ttUserRegistered.length > 0 && !ttUserRegistered.find(u => !u.ready)) {
         clearInterval(interval);
         if (progressBar) {
             for (let i = 0; i < progressBar.length; i++) {

@@ -14,7 +14,7 @@ let ttUserRegistered = [];
     includeHTML(pageId);
 } */
 
-includeHTML = (idPage) => {
+let includeHTML = (idPage) => {
     let page = ttPage.find(p => p.id === idPage);
     body[0].style.backgroundImage = 'url(' + page.backgroundUrl + ')';
     fetch('../' + page.url).then(res => {
@@ -29,11 +29,15 @@ includeHTML = (idPage) => {
             initLastStep();
             setProfile();
         }
-        let ttAdminElement = document.getElementsByClassName('admin-elements');
-        for (let i = 0; i < ttAdminElement.length; i++) {
-            ttAdminElement[i].style.visibility = userAdmin ? 'visible' : 'hidden';
-        }
+        checkAdminElement();
     });
+}
+
+let checkAdminElement = () => {
+    let ttAdminElement = document.getElementsByClassName('admin-elements');
+    for (let i = 0; i < ttAdminElement.length; i++) {
+        ttAdminElement[i].style.visibility = userAdmin ? 'visible' : 'hidden';
+    }
 }
 
 let setProfile = () => {
