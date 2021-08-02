@@ -12,16 +12,14 @@ const options = {};
 const io = require("socket.io")(httpServer, options);
 const Api = require('./services/api');
 
-//let password = 'LycharLeBoss123'
-let password = ''
+let password = 'LycharLeBoss123'
+//let password = ''
 
 let ttUser = [];
 let clientAdminIp;
 let tournamentOpen = true;
 
 io.on("connection", (client) => {
-  console.log(client.handshake.headers["x-real-ip"])
-
   client.on('setAdmin', (str, callback) => {
     if (str === password) { // si quelqu'un d'autre essaye et se trompe ça n'enlève pas l'admin existant
       clientAdminIp = client.handshake.headers["x-real-ip"];

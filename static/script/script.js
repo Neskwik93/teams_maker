@@ -67,9 +67,7 @@ let setProfile = () => {
 
 let checkNewClientAlreadyRegistered = () => {
     socket.emit('checkNewClientAlreadyRegistered', (user) => {
-        console.log(user)
         user = user;
-        console.log(user)
     });
 }
 
