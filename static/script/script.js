@@ -1,14 +1,19 @@
 let includeElement = document.getElementById('include-element');
 let body = document.getElementsByTagName('body');
+const socket = io({
+    transports: ['websocket'],
+    upgrade: false
+});
 
 let ttPage = [
     { id: 1, url: 'home.html', backgroundUrl: '../assets/images/rocket-league.png' },
     { id: 2, url: 'join-tournament.html', backgroundUrl: '../assets/images/rocket-league-ultimate.jpeg' },
-    { id: 3, url: 'last-step.html', backgroundUrl: '../assets/Images/rocket-league-adds-new-fast-and-furious-dlc_9gyn.1200.jpg' },
+    { id: 3, url: 'last-step.html', backgroundUrl: '../assets/images/rocket-league-adds-new-fast-and-furious-dlc_9gyn.1200.jpg' },
 ];
 
 let userAdmin = false;
 let ttUserRegistered = [];
+let user;
 
 /* let back = (pageId) => {
     includeHTML(pageId);
@@ -59,3 +64,13 @@ let setProfile = () => {
         profileElem.innerHTML = str;
     }
 }
+
+let checkNewClientAlreadyRegistered = () => {
+    socket.emit('checkNewClientAlreadyRegistered', (user) => {
+        console.log(user)
+        user = user;
+        console.log(user)
+    });
+}
+
+checkNewClientAlreadyRegistered();

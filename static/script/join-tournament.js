@@ -1,6 +1,6 @@
 
 let ttUserSearch = [];
-let user, platform = 'epic';
+let platform = 'epic';
 let optionList, chevron, inputJoueur, listPlayerSearched, listPlayerRegistered,
     titreListe, modalValidation, progressBar, timer, interval, btnPreparatif, btnCancel, btnNext;
 
@@ -53,7 +53,6 @@ let selectPlayer = (userId) => {
     listPlayerSearched.style.display = 'none';
     socket.emit('getPlayer', { platform: platform, userId: userId }, (response) => {
         user = response.data;
-        console.log(user)
         if (user) {
             let userExist = ttUserRegistered?.find(u => u.metadata.playerId === user.metadata.playerId);
             if (userExist) {
@@ -170,7 +169,6 @@ displayUser = () => {
             </div>`;
         });
         listPlayerRegistered.innerHTML = str;
-        console.log(userAdmin)
         checkAdminElement();
     }
 }

@@ -1,8 +1,3 @@
-const socket = io({
-    transports: ['websocket'],
-    upgrade: false
-});
-
 let passwordInput, errorElem;
 
 
