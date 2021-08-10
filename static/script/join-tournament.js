@@ -152,7 +152,7 @@ displayUser = () => {
             str += `
             <div class="col-md-6">
                 <div id="`+ u?.metadata?.playerId + `" class="player-registered` + (u?.metadata?.playerId === user?.metadata?.playerId ? ' user-client' : '') + `">
-                    <div class="d-flex align-items-center">    
+                    <div class="d-flex align-items-center position-relative">    
                         <img class="img-rank" src="`+ (rank?.stats?.tier?.metadata?.iconUrl || '/assets/logos/user_unknown.jpg') + `" alt="">
                         <span>`+ u?.platformInfo?.platformUserHandle + `</span>
                     </div>
@@ -174,7 +174,8 @@ displayUser = () => {
 }
 
 let removeUser = (userId) => {
-    socket.emit('removeUser', userId)
+    let result = confirm('Ban definitif ?');
+    socket.emit('removeUser', { userId: userId, banDef: result })
 }
 
 socket.on('ruReady', () => {

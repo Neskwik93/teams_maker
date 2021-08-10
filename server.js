@@ -1,4 +1,5 @@
 require('dotenv').config();
+const fs = require('fs');
 
 const express = require('express');
 const cors = require('cors');
@@ -19,6 +20,8 @@ let ttUser = [];
 let clientAdminIp;
 let tournamentOpen = true;
 
+let blackList = fs.readFileSync('blackList.json').toString();
+blackList = blackList ? JSON.parse(blackList) : [];
 io.on("connection", (client) => {
   client.on('setAdmin', (str, callback) => {
     if (str === password) { // si quelqu'un d'autre essaye et se trompe ça n'enlève pas l'admin existant
@@ -60,7 +63,7 @@ io.on("connection", (client) => {
   });
 
   client.on('getUsers', () => {
-    if(ttUser.find(u => u.ready)) {
+    if (ttUser.find(u => u.ready)) {
       io.emit('updateUserReady', ttUser);
     } else {
       io.emit('updateUser', ttUser || []);
@@ -68,20 +71,22 @@ io.on("connection", (client) => {
   });
 
   client.on('addPlayer', (user, callback) => {
+    user.clientId = client.id;
+    user.ip = client.handshake.headers["x-real-ip"];
     if (tournamentOpen) {
-      let userExists = ttUser.findIndex(u => u.ip === client.handshake.headers["x-real-ip"]);
-      if (userExists !== -1) ttUser.splice(userExists, 1);
-      user.clientId = client.id;
-      user.ip = client.handshake.headers["x-real-ip"];
-      ttUser.push(user);
-      io.emit('updateUser', ttUser);
-      callback(user)
+      if (!blackList.find(ip => ip === user.ip)) {
+        let userExists = ttUser.findIndex(u => u.ip === user.ip);
+        if (userExists !== -1) ttUser.splice(userExists, 1);
+        ttUser.push(user);
+        io.emit('updateUser', ttUser);
+        callback(user)
+      } else io.to(client.id).emit('error', 'Impossible de rejoindre le tournoi');
     } else io.to(client.id).emit('error', 'Un tournoi est déjà en cours');
   });
 
   client.on('checkNewClientAlreadyRegistered', (callback) => {
     let userExisting = ttUser.find(u => u.ip === client.handshake.headers["x-real-ip"]);
-    if(userExisting) {
+    if (userExisting) {
       userExisting.clientId = client.id;
     }
     callback(userExisting);
@@ -96,9 +101,14 @@ io.on("connection", (client) => {
     }
   });
 
-  client.on('removeUser', (userId) => { // removed by admin
+  client.on('removeUser', (data) => { // removed by admin
     if (client.handshake.headers["x-real-ip"] === clientAdminIp) {
-      let id = ttUser.findIndex(u => u.clientId === userId);
+      let user = ttUser.find(u => u.clientId === data.userId);
+      if (data.banDef && user.ip) {
+        blackList.push(user.ip);
+        fs.writeFileSync('blackList.json', JSON.stringify(blackList));
+      }
+      let id = ttUser.indexOf(user);
       if (id !== -1) {
         ttUser.splice(id, 1);
         if (!tournamentOpen) io.emit('updateUserReady', ttUser);

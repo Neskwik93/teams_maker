@@ -93,13 +93,13 @@ header {
     position: relative;
     width: 80%;
     margin: auto;
-    margin-top: 5%;
+    margin-top: 3%;
 }
 
 .content {
     position: relative;
     padding: 1%;
-    height: 70vh;
+    height: 75vh;
 }
 
 .page-content {
